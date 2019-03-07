@@ -4,7 +4,7 @@
 #include "duffing.h"
 
 #define mesh    300
-#define points  1000000
+#define points  100000
 #define steps   (mesh*points)
 
 int main(int argc, char **argv){
@@ -23,7 +23,7 @@ int main(int argc, char **argv){
     rk4(F, x, v, h, steps);
 
     printf("# t\tx\tp\n");
-    for(int i=0;i<=steps;i+=3000){
+    for(int i=0;i<=steps;i+=mesh){
         printf("%.8f\t%.8f\t%.8f\n", h*i, x[i], v[i]);
     }
 

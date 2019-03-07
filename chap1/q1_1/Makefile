@@ -19,6 +19,7 @@ endif
 
 %.dat: %.out Makefile
 	./$< 0.0 1.0 > $(*F).dat
+	cat $(*F).dat
 
 %.png: %.plt %.dat Makefile
 	gnuplot $<
