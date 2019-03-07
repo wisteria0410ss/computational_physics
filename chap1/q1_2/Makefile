@@ -4,21 +4,26 @@ CC      := gcc
 CFLAGS  := -O2 -std=c11 -Wall
 LDFLAGS := -L ../../lib/ -Wl,-rpath=../../lib/ -lm -lmt
 
+ifdef NAME
+all: $(NAME).png
+else
 all: a.png
+endif
 
-a.o: a.c Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
-
-a.out: a.c Makefile
+%.out: %.c Makefile
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 
-a.dat: a.out Makefile
-	./$< > a.dat
+%.dat: %.out Makefile
+	./$< > $(*F).dat
 
-a.png: a.plt a.dat Makefile
+%.png: %.plt %.dat Makefile
 	gnuplot $<
 
+ifdef NAME
+show: $(NAME).png Makefile
+else
 show: a.png Makefile
+endif
 	gnome-open $<
 
 clean:
