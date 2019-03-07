@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
-#include "../../headers/mt19937ar.h"
+#include "../../headers/mt.h"
 
 #define L 150
 #define N 9000

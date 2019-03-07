@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <math.h>
-#include "../../headers/mt19937ar.h"
+#include "../../headers/mt.h"
 
 #define L 500
 #define N 10000
