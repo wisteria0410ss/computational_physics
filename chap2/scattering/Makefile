@@ -1,4 +1,4 @@
-.PHONY: show
+.PHONY: clean, show
 .PRECIOUS: %.out %.dat
 
 CPPFLAGS := -Ofast -std=gnu++17 -Wall -fopenmp
@@ -18,3 +18,6 @@ show: cross_section.png Makefile
 	
 show_d: differential_cross_section.png Makefile
 	gnome-open $<
+
+clean:
+	-rm -f *.out *.dat *.png
