@@ -3,6 +3,7 @@
 #include "../headers/cmatrix.h"
 
 const double pi = 3.141592653589793238462;
+const double a0 = 1.0;
 const double alpha[4] = {13.00773, 1.962079, 0.444529, 0.1219492};
 
 extern void dsygv_(int *itype, char *jobz, char *uplo, int *n, 
@@ -10,7 +11,7 @@ extern void dsygv_(int *itype, char *jobz, char *uplo, int *n,
 
 void call_dsygv(int n, double **a, double **b, double *eigenvals){
     int itype = 1;      // Az = λBz
-    char jobz = 'N';    // only eigenvalues are computed
+    char jobz = 'V';    // eigenvalues and eigenvectors are computed
     char uplo = 'U';    // stored in upper triangles
     int lwork = 3*n;
     double *work = alloc_dvector(lwork);
@@ -41,6 +42,13 @@ double calc_S(int m, int n){
     return pow(pi/(alpha[m]+alpha[n]), 1.5);
 }
 
+double phi(double r, int n, double *c, const double *a){
+    double ret = 0.0;
+    for(int i=0;i<n;i++) ret += c[i] * exp(-a[i]*r*r);
+
+    return ret;
+}
+
 int main(){
     int N = sizeof(alpha) / sizeof(alpha[0]);
 
@@ -59,6 +67,14 @@ int main(){
 
     printf("#計算結果\t解析解    \t差\n");
     printf("%.6f\t%.6f\t% .6f\n", eigenvals[0], -0.5, eigenvals[0]+0.5);
+
+    FILE *fp;
+    fp = fopen("eigenvector.dat", "w");
+    fprintf(fp, "#r\t計算結果\t解析解\n");
+    for(double r=0.0; r<=10.0; r+=0.01){
+        fprintf(fp, "%.8e\t%.8e\t%.8e\n", r, phi(r, N, H[0], alpha), 2.0*exp(-r/a0)/pow(a0, 1.5));
+    }
+    fclose(fp);
 
     free_dmatrix(H);
     free_dmatrix(S);
