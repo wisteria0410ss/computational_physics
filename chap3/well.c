@@ -57,9 +57,9 @@ int main(int argc, char** argv){
     double *eigenvals = alloc_dvector(N);
     call_dsygv(N, H, S, eigenvals);
 
-    printf("#\t計算結果          \t解析解          \t差\n");
+    printf("#\t  計算結果  \t   解析解   \t     差\n");
     for(int i=0;i<N;i++){
-        printf("%d\t%.12e\t%.12e\t% .12e\n", i+1, eigenvals[i], pow((i+1)*pi, 2)/4.0, eigenvals[i] - pow((i+1)*pi, 2)/4.0);
+        printf("%d\t%12.6f\t%12.6f\t% 12.6f\n", i+1, eigenvals[i], pow((i+1)*pi, 2)/4.0, eigenvals[i] - pow((i+1)*pi, 2)/4.0);
     }
 
     free_dmatrix(H);
