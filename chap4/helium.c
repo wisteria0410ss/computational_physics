@@ -127,6 +127,14 @@ int main(){
 
     printf("%.12f\n", E);
 
+    FILE *fp = fopen("helium_wf.dat", "w");
+    for(double r=0.0;r<=5.0;r+=0.01){
+        double wf = 0.0;
+        for(int i=0;i<n_basis;i++) wf += c[i]*exp(-alpha[i]*r*r);
+        fprintf(fp, "%.12e\t%.12e\n", r, wf);
+    }
+    fclose(fp);
+
     free_dmatrix(h);
     free_dmatrix(S);
     for(int i=0;i<n_basis;i++){
